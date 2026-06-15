@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WEATHER</title>
+    <style>
+        body{
+            background-color: rgb(216, 183, 246);
+            min-height: 100vh;
+            display: flex;
+            justify-content:center;
+            align-items:start;
+            gap:30px;
+            margin-top: 40px;
+        }
+        #weather,#input{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 30px;
+            border:none;
+            background-color: rgb(189, 224, 144);
+            border-radius: 10px;
+            padding: 10px;
+            border:2px solid black;
+            color: white;
+
+        }
+        #result{
+            
+
+            
+            padding: 30px;
+            background-color: rgb(104, 182, 185);
+            font-size: 40px;
+            border-radius: 20px;
+            text-align: center;
+            color: white;
+            min-width: 200px;
+
+        }
+    </style>
+</head>
+<body>
+    <input id="input" type="text" placeholder="Enter city name">
+    <button id="weather">Get Weather</button>
+    <div id="result"></div>
+    <script>
+        document.getElementById("weather").addEventListener("click",function(){
+            var input=document.getElementById("input").value
+            fetch("https://api.openweathermap.org/data/2.5/weather?q="+input+"&appid=4fb3d8abff7e8ab24ce1221113b83248&units=metric")
+            .then(function(response){
+                return response.json()
+            })
+            .then(function(data){
+                if(data.cod === "404"){
+                    document.getElementById("result").innerText = "City not found!"
+                    return
+                }
+                document.getElementById("result").innerText=document.getElementById("result").innerText = 
+    "📍 " + data.name + "\n" +
+    "🌡️ " + data.main.temp + "°C\n" +
+    "💧 Humidity: " + data.main.humidity + "%\n" +
+    "🌤️ " + data.weather[0].description
+            })
+            
+        })
+    </script>
+</body>
+</html>
